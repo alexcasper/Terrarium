@@ -56,6 +56,9 @@ __all__ = [
     "JiraTicketEnvironment",
     "HospitalEnvironment",
     "IsThisSeatTakenEnvironment",
+    "PriceWarMarketEnvironment",
+    "AuctionHouseEnvironment",
+    "CommonPoolEnvironment",
 ]
 
 _LAZY_ATTRS = {
@@ -65,6 +68,9 @@ _LAZY_ATTRS = {
     "JiraTicketEnvironment": ".jira_ticket.jira_ticket_env:JiraTicketEnvironment",
     "HospitalEnvironment": ".hospital.hospital_env:HospitalEnvironment",
     "IsThisSeatTakenEnvironment": ".is_this_seat_taken.is_this_seat_taken_env:IsThisSeatTakenEnvironment",
+    "PriceWarMarketEnvironment": ".price_war_market.price_war_market_env:PriceWarMarketEnvironment",
+    "AuctionHouseEnvironment": ".auction_house.auction_house_env:AuctionHouseEnvironment",
+    "CommonPoolEnvironment": ".common_pool.common_pool_env:CommonPoolEnvironment",
 }
 
 

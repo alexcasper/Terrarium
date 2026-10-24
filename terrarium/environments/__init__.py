@@ -17,6 +17,9 @@ __all__ = [
     "JiraTicketEnvironment",
     "HospitalEnvironment",
     "IsThisSeatTakenEnvironment",
+    "PriceWarMarketEnvironment",
+    "AuctionHouseEnvironment",
+    "CommonPoolEnvironment",
 ]
 
 _LAZY_ATTRS = {
@@ -27,6 +30,9 @@ _LAZY_ATTRS = {
     "JiraTicketEnvironment": ".dcops:JiraTicketEnvironment",
     "HospitalEnvironment": ".dcops:HospitalEnvironment",
     "IsThisSeatTakenEnvironment": ".dcops:IsThisSeatTakenEnvironment",
+    "PriceWarMarketEnvironment": ".dcops:PriceWarMarketEnvironment",
+    "AuctionHouseEnvironment": ".dcops:AuctionHouseEnvironment",
+    "CommonPoolEnvironment": ".dcops:CommonPoolEnvironment",
 }
 
 

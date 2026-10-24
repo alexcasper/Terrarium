@@ -1,0 +1,36 @@
+simulation:
+  max_iterations: 6
+  max_planning_rounds: 1
+  max_conversation_steps: 3
+  seed: 42
+  tags:
+    - poc
+    - common_pool
+
+environment:
+  name: CommonPoolEnvironment
+  pool_capacity: 100
+  initial_pool: 100
+  growth_rate: 0.25
+  unit_value: 10
+  max_extract: 15
+  collapse_threshold: 10
+
+communication_network:
+  topology: complete
+  num_agents: 4
+  consolidate_channels: true
+
+llm:
+  # Qwen3.5-4B served locally (llama.cpp OpenAI-compatible server on AUP).
+  provider: vllm
+  vllm:
+    auto_start_server: false
+    models:
+      - model: Qwen3.5-4B
+        served_model_name: Qwen3.5-4B
+        base_url: http://127.0.0.1:8321
+        request_timeout: 300
+  params:
+    max_tokens: 400
+    temperature: 0.7

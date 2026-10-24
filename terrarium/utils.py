@@ -679,12 +679,24 @@ def _get_environment_registry():
     from terrarium.environments.dcops.is_this_seat_taken import (
         IsThisSeatTakenEnvironment,
     )
+    from terrarium.environments.dcops.price_war_market import (
+        PriceWarMarketEnvironment,
+    )
+    from terrarium.environments.dcops.auction_house import (
+        AuctionHouseEnvironment,
+    )
+    from terrarium.environments.dcops.common_pool import (
+        CommonPoolEnvironment,
+    )
 
     return {
         MeetingSchedulingEnvironment.__name__: MeetingSchedulingEnvironment,
         PersonalAssistantEnvironment.__name__: PersonalAssistantEnvironment,
         SmartGridEnvironment.__name__: SmartGridEnvironment,
         HospitalEnvironment.__name__: HospitalEnvironment,
+        PriceWarMarketEnvironment.__name__: PriceWarMarketEnvironment,
+        AuctionHouseEnvironment.__name__: AuctionHouseEnvironment,
+        CommonPoolEnvironment.__name__: CommonPoolEnvironment,
         JiraTicketEnvironment.__name__: JiraTicketEnvironment,
         IsThisSeatTakenEnvironment.__name__: IsThisSeatTakenEnvironment,
     }
