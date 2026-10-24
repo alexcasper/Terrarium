@@ -688,8 +688,23 @@ def _get_environment_registry():
     from terrarium.environments.dcops.common_pool import (
         CommonPoolEnvironment,
     )
+    from terrarium.environments.dcops.public_goods import (
+        PublicGoodsEnvironment,
+    )
+    from terrarium.environments.dcops.network_routing import (
+        NetworkRoutingEnvironment,
+    )
+    from terrarium.environments.dcops.supply_chain import (
+        SupplyChainEnvironment,
+    )
+    from terrarium.environments.dcops.smart_grid_storage import (
+        SmartGridStorageEnvironment,
+    )
+    from terrarium.environments.dcops.ride_hailing import (
+        RideHailingDispatchEnvironment,
+    )
 
-    return {
+    registry = {
         MeetingSchedulingEnvironment.__name__: MeetingSchedulingEnvironment,
         PersonalAssistantEnvironment.__name__: PersonalAssistantEnvironment,
         SmartGridEnvironment.__name__: SmartGridEnvironment,
@@ -697,9 +712,30 @@ def _get_environment_registry():
         PriceWarMarketEnvironment.__name__: PriceWarMarketEnvironment,
         AuctionHouseEnvironment.__name__: AuctionHouseEnvironment,
         CommonPoolEnvironment.__name__: CommonPoolEnvironment,
+        PublicGoodsEnvironment.__name__: PublicGoodsEnvironment,
+        NetworkRoutingEnvironment.__name__: NetworkRoutingEnvironment,
+        SupplyChainEnvironment.__name__: SupplyChainEnvironment,
         JiraTicketEnvironment.__name__: JiraTicketEnvironment,
         IsThisSeatTakenEnvironment.__name__: IsThisSeatTakenEnvironment,
+        SmartGridStorageEnvironment.__name__: SmartGridStorageEnvironment,
+        RideHailingDispatchEnvironment.__name__: RideHailingDispatchEnvironment,
     }
+
+    import importlib
+
+    for _mod_path, _cls_name in (
+        ("terrarium.environments.dcops.ad_auction_gsp", "AdAuctionGSPEnvironment"),
+        ("terrarium.environments.dcops.reputation", "ReputationEnvironment"),
+    ):
+        try:
+            _mod = importlib.import_module(_mod_path)
+            _cls = getattr(_mod, _cls_name, None)
+            if _cls is not None:
+                registry[_cls.__name__] = _cls
+        except Exception:
+            pass
+
+    return registry
 
 
 def get_implemented_environment_names() -> List[str]:

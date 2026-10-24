@@ -59,6 +59,13 @@ __all__ = [
     "PriceWarMarketEnvironment",
     "AuctionHouseEnvironment",
     "CommonPoolEnvironment",
+    "PublicGoodsEnvironment",
+    "NetworkRoutingEnvironment",
+    "SupplyChainEnvironment",
+    "SmartGridStorageEnvironment",
+    "RideHailingDispatchEnvironment",
+    "ReputationEnvironment",
+    "AdAuctionGSPEnvironment",
 ]
 
 _LAZY_ATTRS = {
@@ -71,6 +78,13 @@ _LAZY_ATTRS = {
     "PriceWarMarketEnvironment": ".price_war_market.price_war_market_env:PriceWarMarketEnvironment",
     "AuctionHouseEnvironment": ".auction_house.auction_house_env:AuctionHouseEnvironment",
     "CommonPoolEnvironment": ".common_pool.common_pool_env:CommonPoolEnvironment",
+    "PublicGoodsEnvironment": ".public_goods.public_goods_env:PublicGoodsEnvironment",
+    "NetworkRoutingEnvironment": ".network_routing.network_routing_env:NetworkRoutingEnvironment",
+    "SupplyChainEnvironment": ".supply_chain.supply_chain_env:SupplyChainEnvironment",
+    "SmartGridStorageEnvironment": ".smart_grid_storage.smart_grid_storage_env:SmartGridStorageEnvironment",
+    "RideHailingDispatchEnvironment": ".ride_hailing.ride_hailing_env:RideHailingDispatchEnvironment",
+    "ReputationEnvironment": ".reputation.reputation_env:ReputationEnvironment",
+    "AdAuctionGSPEnvironment": ".ad_auction_gsp.ad_auction_gsp_env:AdAuctionGSPEnvironment",
 }
 
 

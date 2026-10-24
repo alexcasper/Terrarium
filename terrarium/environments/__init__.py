@@ -20,6 +20,13 @@ __all__ = [
     "PriceWarMarketEnvironment",
     "AuctionHouseEnvironment",
     "CommonPoolEnvironment",
+    "PublicGoodsEnvironment",
+    "NetworkRoutingEnvironment",
+    "SupplyChainEnvironment",
+    "SmartGridStorageEnvironment",
+    "RideHailingDispatchEnvironment",
+    "ReputationEnvironment",
+    "AdAuctionGSPEnvironment",
 ]
 
 _LAZY_ATTRS = {
@@ -33,6 +40,13 @@ _LAZY_ATTRS = {
     "PriceWarMarketEnvironment": ".dcops:PriceWarMarketEnvironment",
     "AuctionHouseEnvironment": ".dcops:AuctionHouseEnvironment",
     "CommonPoolEnvironment": ".dcops:CommonPoolEnvironment",
+    "PublicGoodsEnvironment": ".dcops:PublicGoodsEnvironment",
+    "NetworkRoutingEnvironment": ".dcops:NetworkRoutingEnvironment",
+    "SupplyChainEnvironment": ".dcops:SupplyChainEnvironment",
+    "SmartGridStorageEnvironment": ".dcops:SmartGridStorageEnvironment",
+    "RideHailingDispatchEnvironment": ".dcops:RideHailingDispatchEnvironment",
+    "ReputationEnvironment": ".dcops:ReputationEnvironment",
+    "AdAuctionGSPEnvironment": ".dcops:AdAuctionGSPEnvironment",
 }
 
 

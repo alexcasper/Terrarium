@@ -1,0 +1,44 @@
+simulation:
+  max_iterations: 5
+  max_planning_rounds: 1
+  max_conversation_steps: 3
+  seed: 42
+  tags:
+    - poc
+    - network_routing
+
+environment:
+  name: NetworkRoutingEnvironment
+  units_per_agent: 6
+  links:
+    - name: link_alpha
+      base_latency: 10
+      congestion_rate: 1.2
+    - name: link_beta
+      base_latency: 28
+      congestion_rate: 0.6
+    - name: link_gamma
+      base_latency: 55
+      congestion_rate: 0.3
+    - name: link_delta
+      base_latency: 75
+      congestion_rate: 0.0
+
+communication_network:
+  topology: complete
+  num_agents: 4
+  consolidate_channels: true
+
+llm:
+  # Qwen3.5-4B served locally (llama.cpp OpenAI-compatible server on AUP pod).
+  provider: vllm
+  vllm:
+    auto_start_server: false
+    models:
+      - model: Qwen3.5-4B
+        served_model_name: Qwen3.5-4B
+        base_url: http://127.0.0.1:8321
+        request_timeout: 300
+  params:
+    max_tokens: 400
+    temperature: 0.7

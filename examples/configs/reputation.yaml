@@ -1,0 +1,41 @@
+simulation:
+  max_iterations: 6
+  max_planning_rounds: 1
+  max_conversation_steps: 3
+  seed: 42
+  tags:
+    - poc
+    - reputation
+
+environment:
+  name: ReputationEnvironment
+  # Donation-game payoffs: honor pays `cost` and gives the partner `benefit`.
+  benefit: 10
+  cost: 4
+  # How many most-recent public-record entries agents see (0 = full board).
+  memory_length: 0
+  # Flag an agent whose honor streak before a betrayal reaches this length.
+  betrayal_streak_threshold: 3
+  # What an agent that never commits does (repeats previous action otherwise).
+  default_action: honor
+  # Set to a file path to persist the reputation ledger across episodes/runs.
+  persist_path: null
+
+communication_network:
+  topology: complete
+  num_agents: 4
+  consolidate_channels: true
+
+llm:
+  # Qwen3.5-4B served locally (llama.cpp OpenAI-compatible server on AUP pod).
+  provider: vllm
+  vllm:
+    auto_start_server: false
+    models:
+      - model: Qwen3.5-4B
+        served_model_name: Qwen3.5-4B
+        base_url: http://127.0.0.1:8321
+        request_timeout: 300
+  params:
+    max_tokens: 400
+    temperature: 0.7
