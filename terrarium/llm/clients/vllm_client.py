@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import json
+import logging
+import time
 from typing import Any, Dict, List, Tuple
 
 import requests
 
 from terrarium.llm.clients.abstract_client import AbstractClient
+
+logger = logging.getLogger(__name__)
 
 
 def _convert_tools(tools: List[Dict[str, Any]] | None) -> List[Dict[str, Any]]:
@@ -112,16 +116,33 @@ class VLLMClient(AbstractClient):
         converted_tools = _convert_tools(params.get("tools"))
         if converted_tools:
             payload["tools"] = converted_tools
-        response = self.session.post(
-            f"{self.base_url}/chat/completions",
-            headers=self._build_headers(),
-            data=json.dumps(payload),
-            timeout=self.request_timeout,
-        )
-        if not response.ok:
-            raise RuntimeError(
-                f"vLLM chat request failed ({response.status_code}): {response.text}"
+        # Bounded retry on HTTP 500 "Failed to parse tool call arguments" from
+        # llama.cpp (truncated tool-call JSON at the token cap). A retry re-rolls
+        # the sample at the configured temperature, which usually completes.
+        max_attempts = 3
+        for attempt in range(1, max_attempts + 1):
+            response = self.session.post(
+                f"{self.base_url}/chat/completions",
+                headers=self._build_headers(),
+                data=json.dumps(payload),
+                timeout=self.request_timeout,
             )
+            if response.ok:
+                break
+            parse_failure = (
+                response.status_code == 500
+                and "Failed to parse" in (response.text or "")
+            )
+            if not parse_failure or attempt == max_attempts:
+                raise RuntimeError(
+                    f"vLLM chat request failed ({response.status_code}) "
+                    f"after {attempt} attempt(s): {response.text}"
+                )
+            logger.warning(
+                "vLLM parse failure (attempt %d/%d), retrying: %s",
+                attempt, max_attempts, (response.text or "")[:200],
+            )
+            time.sleep(2 * attempt)
         data = response.json()
         choices = data.get("choices") or []
         first_message = choices[0]["message"] if choices else {"content": ""}
@@ -151,7 +172,17 @@ class VLLMClient(AbstractClient):
             try:
                 arguments = json.loads(arguments_raw)
             except json.JSONDecodeError:
-                arguments = {}
+                # NEVER silently execute with empty arguments: a truncated
+                # tool-call JSON means the model's action was cut off at the
+                # token cap. Record an explicit parse_error marker instead.
+                arguments = {
+                    "status": "parse_error",
+                    "raw": (arguments_raw or "")[:200],
+                }
+                logger.error(
+                    "Tool call arguments failed to parse (truncated at token "
+                    "cap?): tool=%s raw=%r", tool_name, (arguments_raw or "")[:120],
+                )
             step_tools.append(f"{tool_name} -- {json.dumps(arguments)}")
             result = await execute_tool_callback(tool_name, arguments)
             context.append(
