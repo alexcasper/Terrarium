@@ -146,6 +146,15 @@ class SupplyChainPrompts:
         if hist and tier != "retailer":
             lines.append(f"Your own past asking prices: {hist}.")
 
+        if blackboard_context:
+            bb_blocks = [
+                f"=== BLACKBOARD {bb_id} ===\n{str(content).strip()}"
+                for bb_id, content in blackboard_context.items()
+                if content and str(content).strip()
+            ]
+            if bb_blocks:
+                lines.append("\n\n".join(bb_blocks))
+
         if phase == "planning":
             if tier == "retailer":
                 lines.append(

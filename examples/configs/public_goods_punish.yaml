@@ -1,0 +1,36 @@
+simulation:
+  max_iterations: 5
+  max_planning_rounds: 1
+  max_conversation_steps: 3
+  seed: 42
+  tags:
+    - poc
+    - public_goods
+    - punishment_arm
+
+environment:
+  name: PublicGoodsEnvironment
+  endowment: 20
+  multiplier: 1.6
+  punishment_enabled: true
+  punish_points: 3
+  punish_cost: 1
+  punish_damage: 3
+
+communication_network:
+  topology: complete
+  num_agents: 4
+  consolidate_channels: true
+
+llm:
+  provider: vllm
+  vllm:
+    auto_start_server: false
+    models:
+      - model: Qwen3.5-4B
+        served_model_name: Qwen3.5-4B
+        base_url: http://127.0.0.1:8321
+        request_timeout: 300
+  params:
+    max_tokens: 400
+    temperature: 0.7

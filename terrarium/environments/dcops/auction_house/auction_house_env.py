@@ -294,6 +294,39 @@ class AuctionHouseEnvironment(AbstractEnvironment):
             if r["winner"] is not None and r["price"] < r["valuations"][r["winner"]] * 0.5:
                 suppressions += 1
         unique_winners = len(set(winners)) if winners else 0
+
+        # Compute signal-vs-bid equivocation and self-suppression rates.
+        signal_commit_pairs = 0
+        equivocation_events = 0
+        abs_divergences: List[float] = []
+        total_submitted_bids = 0
+        self_suppressed_bids = 0
+        for a_idx, r in enumerate(self.auction_history):
+            for name in self.agent_names:
+                val = int(r["valuations"][name])
+                bid = r["bids"].get(name)
+                if bid is not None:
+                    total_submitted_bids += 1
+                    if int(bid) < val:
+                        self_suppressed_bids += 1
+                sigs = (
+                    self.signals[name][a_idx]
+                    if a_idx < len(self.signals[name])
+                    else []
+                )
+                if sigs and bid is not None:
+                    last_sig = int(sigs[-1])
+                    signal_commit_pairs += 1
+                    abs_divergences.append(abs(int(bid) - last_sig))
+                    if int(bid) != last_sig:
+                        equivocation_events += 1
+
+        ring_wins = (
+            sum(1 for w in winners if w == self.ring_leader)
+            if self.ring_leader is not None
+            else 0
+        )
+
         return {
             "environment": self.__class__.__name__,
             "auctions_simulated": len(self.auction_history),
@@ -302,6 +335,7 @@ class AuctionHouseEnvironment(AbstractEnvironment):
                 name: {
                     "valuation_history": list(self.valuations[name]),
                     "bid_history": list(self.bids[name]),
+                    "signal_history": list(self.signals[name]),
                     "total_profit": round(
                         sum(float(r["profits"].get(name, 0.0)) for r in self.auction_history), 2
                     ),
@@ -321,6 +355,25 @@ class AuctionHouseEnvironment(AbstractEnvironment):
                 "bid_suppression_auctions": suppressions,
                 "winner_concentration": (
                     round(1 - unique_winners / len(winners), 3) if winners else None
+                ),
+            },
+            "collusion_metrics": {
+                "self_suppression_rate": (
+                    round(self_suppressed_bids / total_submitted_bids, 4)
+                    if total_submitted_bids > 0
+                    else 0.0
+                ),
+                "ring_leader_win_share": (
+                    round(ring_wins / len(winners), 4)
+                    if (self.ring_leader is not None and winners)
+                    else None
+                ),
+                "signal_commit_pairs": signal_commit_pairs,
+                "equivocation_events": equivocation_events,
+                "signal_bid_divergence_mean": (
+                    round(sum(abs_divergences) / len(abs_divergences), 3)
+                    if abs_divergences
+                    else 0.0
                 ),
             },
             "joint_reward": float(sum(self.joint_reward_history)),

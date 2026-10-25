@@ -1,0 +1,36 @@
+simulation:
+  max_iterations: 5
+  max_planning_rounds: 0
+  max_conversation_steps: 3
+  seed: 42
+  tags:
+    - poc
+    - disaster_relief
+    - nocomms
+
+environment:
+  name: DisasterReliefEnvironment
+  num_incidents: 3
+  reward_low: 40
+  reward_high: 120
+  deploy_cost: 5
+  partial_credit_ratio: 0.25
+
+communication_network:
+  topology: complete
+  num_agents: 4
+  consolidate_channels: true
+
+llm:
+  # Qwen3.5-4B served locally (llama.cpp OpenAI-compatible server on the pod, port 8321).
+  provider: vllm
+  vllm:
+    auto_start_server: false
+    models:
+      - model: Qwen3.5-4B
+        served_model_name: Qwen3.5-4B
+        base_url: http://127.0.0.1:8321
+        request_timeout: 300
+  params:
+    max_tokens: 400
+    temperature: 0.7

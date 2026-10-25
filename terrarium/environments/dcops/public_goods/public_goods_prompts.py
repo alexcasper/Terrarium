@@ -109,6 +109,15 @@ class PublicGoodsPrompts:
         if hist:
             lines.append(f"Your own past contributions: {hist}.")
 
+        if blackboard_context:
+            bb_blocks = [
+                f"=== BLACKBOARD {bb_id} ===\n{str(content).strip()}"
+                for bb_id, content in blackboard_context.items()
+                if content and str(content).strip()
+            ]
+            if bb_blocks:
+                lines.append("\n\n".join(bb_blocks))
+
         if phase == "planning":
             lines.append(
                 "The blackboard above shows the conversation so far. You may "

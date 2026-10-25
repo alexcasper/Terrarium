@@ -182,12 +182,14 @@ class CommonPoolEnvironment(AbstractEnvironment):
                 granted = {name: float(desired[name]) for name in self.agent_names}
             else:
                 # Proportional rationing; integer floor, remainder to earliest
-                # agents (deterministic, order-stable).
+                # agents (deterministic, order-stable). Budget is floored so
+                # total granted can never exceed the (possibly fractional)
+                # pool level.
                 floors = {
                     name: int(pool_before * desired[name] / total_desired)
                     for name in self.agent_names
                 }
-                remainder = int(round(pool_before)) - sum(floors.values())
+                remainder = int(pool_before) - sum(floors.values())
                 for name in self.agent_names:
                     if remainder <= 0:
                         break

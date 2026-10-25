@@ -100,7 +100,11 @@ class VLLMClient(AbstractClient):
             "model": params.get("model", self.model_name),
             "messages": input,
         }
-        max_tokens = params.get("max_completion_tokens") or params.get("max_output_tokens")
+        max_tokens = (
+            params.get("max_completion_tokens")
+            or params.get("max_output_tokens")
+            or params.get("max_tokens")
+        )
         if max_tokens:
             payload["max_tokens"] = max_tokens
         if params.get("temperature") is not None:

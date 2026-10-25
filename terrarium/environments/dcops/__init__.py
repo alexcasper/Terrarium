@@ -65,6 +65,16 @@ __all__ = [
     "SmartGridStorageEnvironment",
     "RideHailingDispatchEnvironment",
     "ReputationEnvironment",
+    "SideContractEnvironment",
+    "PeerPredictionReportingEnvironment",
+    "MultiIssueBarterEnvironment",
+    "CoalitionFormationEnvironment",
+    "LegislativeBargainingEnvironment",
+    "SharedCacheEnvironment",
+    "FederatedUpdateEnvironment",
+    "DisasterReliefEnvironment",
+    "TieredInfoEnvironment",
+    "InstanceDifficultyAutotunerEnvironment",
     "AdAuctionGSPEnvironment",
 ]
 
@@ -84,6 +94,16 @@ _LAZY_ATTRS = {
     "SmartGridStorageEnvironment": ".smart_grid_storage.smart_grid_storage_env:SmartGridStorageEnvironment",
     "RideHailingDispatchEnvironment": ".ride_hailing.ride_hailing_env:RideHailingDispatchEnvironment",
     "ReputationEnvironment": ".reputation.reputation_env:ReputationEnvironment",
+    "SideContractEnvironment": ".side_contract.side_contract_env:SideContractEnvironment",
+    "PeerPredictionReportingEnvironment": ".peer_prediction.peer_prediction_env:PeerPredictionReportingEnvironment",
+    "MultiIssueBarterEnvironment": ".multi_issue_barter.multi_issue_barter_env:MultiIssueBarterEnvironment",
+    "CoalitionFormationEnvironment": ".coalition_formation.coalition_formation_env:CoalitionFormationEnvironment",
+    "LegislativeBargainingEnvironment": ".legislative_bargaining.legislative_bargaining_env:LegislativeBargainingEnvironment",
+    "SharedCacheEnvironment": ".shared_cache.shared_cache_env:SharedCacheEnvironment",
+    "FederatedUpdateEnvironment": ".federated_update.federated_update_env:FederatedUpdateEnvironment",
+    "DisasterReliefEnvironment": ".disaster_relief.disaster_relief_env:DisasterReliefEnvironment",
+    "TieredInfoEnvironment": ".tiered_info.tiered_info_env:TieredInfoEnvironment",
+    "InstanceDifficultyAutotunerEnvironment": ".difficulty_autotuner.difficulty_autotuner_env:InstanceDifficultyAutotunerEnvironment",
     "AdAuctionGSPEnvironment": ".ad_auction_gsp.ad_auction_gsp_env:AdAuctionGSPEnvironment",
 }
 

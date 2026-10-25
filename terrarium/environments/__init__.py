@@ -26,6 +26,16 @@ __all__ = [
     "SmartGridStorageEnvironment",
     "RideHailingDispatchEnvironment",
     "ReputationEnvironment",
+    "SideContractEnvironment",
+    "PeerPredictionReportingEnvironment",
+    "MultiIssueBarterEnvironment",
+    "CoalitionFormationEnvironment",
+    "LegislativeBargainingEnvironment",
+    "SharedCacheEnvironment",
+    "FederatedUpdateEnvironment",
+    "DisasterReliefEnvironment",
+    "TieredInfoEnvironment",
+    "InstanceDifficultyAutotunerEnvironment",
     "AdAuctionGSPEnvironment",
 ]
 
@@ -46,6 +56,16 @@ _LAZY_ATTRS = {
     "SmartGridStorageEnvironment": ".dcops:SmartGridStorageEnvironment",
     "RideHailingDispatchEnvironment": ".dcops:RideHailingDispatchEnvironment",
     "ReputationEnvironment": ".dcops:ReputationEnvironment",
+    "SideContractEnvironment": ".dcops:SideContractEnvironment",
+    "PeerPredictionReportingEnvironment": ".dcops:PeerPredictionReportingEnvironment",
+    "MultiIssueBarterEnvironment": ".dcops:MultiIssueBarterEnvironment",
+    "CoalitionFormationEnvironment": ".dcops:CoalitionFormationEnvironment",
+    "LegislativeBargainingEnvironment": ".dcops:LegislativeBargainingEnvironment",
+    "SharedCacheEnvironment": ".dcops:SharedCacheEnvironment",
+    "FederatedUpdateEnvironment": ".dcops:FederatedUpdateEnvironment",
+    "DisasterReliefEnvironment": ".dcops:DisasterReliefEnvironment",
+    "TieredInfoEnvironment": ".dcops:TieredInfoEnvironment",
+    "InstanceDifficultyAutotunerEnvironment": ".dcops:InstanceDifficultyAutotunerEnvironment",
     "AdAuctionGSPEnvironment": ".dcops:AdAuctionGSPEnvironment",
 }
 

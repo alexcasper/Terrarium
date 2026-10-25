@@ -724,8 +724,22 @@ def _get_environment_registry():
     import importlib
 
     for _mod_path, _cls_name in (
+        ("terrarium.environments.dcops.side_contract", "SideContractEnvironment"),
+        ("terrarium.environments.dcops.bribery_attack", "BriberyAttackEnvironment"),
+        ("terrarium.environments.dcops.extortion_attack", "ExtortionAttackEnvironment"),
+        ("terrarium.environments.dcops.peer_prediction", "PeerPredictionReportingEnvironment"),
+        ("terrarium.environments.dcops.multi_issue_barter", "MultiIssueBarterEnvironment"),
+        ("terrarium.environments.dcops.coalition_formation", "CoalitionFormationEnvironment"),
+        ("terrarium.environments.dcops.legislative_bargaining", "LegislativeBargainingEnvironment"),
+        ("terrarium.environments.dcops.shared_cache", "SharedCacheEnvironment"),
+        ("terrarium.environments.dcops.federated_update", "FederatedUpdateEnvironment"),
+        ("terrarium.environments.dcops.disaster_relief", "DisasterReliefEnvironment"),
+        ("terrarium.environments.dcops.tiered_info", "TieredInfoEnvironment"),
+        ("terrarium.environments.dcops.difficulty_autotuner", "InstanceDifficultyAutotunerEnvironment"),
         ("terrarium.environments.dcops.ad_auction_gsp", "AdAuctionGSPEnvironment"),
         ("terrarium.environments.dcops.reputation", "ReputationEnvironment"),
+        ("terrarium.environments.dcops.sybil_coalition", "SybilCoalitionEnvironment"),
+        ("terrarium.environments.dcops.whitewashing", "WhitewashingEnvironment"),
     ):
         try:
             _mod = importlib.import_module(_mod_path)
@@ -823,7 +837,11 @@ def get_generation_params(llm_config: Dict[str, Any]) -> Dict[str, Any]:
     provider = _normalize_provider_name(llm_config.get("provider", ""))
     provider_block = _get_provider_block(provider, llm_config)
 
-    raw_params = provider_block.get("params") or provider_block.get("generation") or {}
+    raw_params = provider_block.get("params") or provider_block.get("generation")
+    if not raw_params:
+        # Configs in examples/configs/ place generation params at llm.params
+        # (sibling of the provider block); fall back to that.
+        raw_params = llm_config.get("params") or llm_config.get("generation") or {}
     if not isinstance(raw_params, dict):
         return {}
 

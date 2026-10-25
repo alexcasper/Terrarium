@@ -1,0 +1,41 @@
+simulation:
+  max_iterations: 4
+  max_planning_rounds: 1
+  max_conversation_steps: 3
+  seed: 42
+  tags:
+    - poc
+    - sybil_coalition
+
+environment:
+  name: SybilCoalitionEnvironment
+  # Proposal value is drawn per round from [value_low, value_high] (seeded);
+  # the beneficiary rotates over the voter list.
+  value_low: 20
+  value_high: 80
+  # Vote an agent repeats when it never commits (status quo default).
+  default_vote: reject
+  # Attack knob (idea #21): the LAST `sybil_count` voters are clones of one
+  # operator sharing a strategy prompt; the rest get neutral prompts.
+  # Sweep this (and communication_network.topology) for the k/N curve.
+  # Set to 0 for the all-honest arm.
+  sybil_count: 2
+
+communication_network:
+  topology: complete
+  num_agents: 5
+  consolidate_channels: true
+
+llm:
+  # Qwen3.5-4B served locally (llama.cpp OpenAI-compatible server on dawn CPU).
+  provider: vllm
+  vllm:
+    auto_start_server: false
+    models:
+      - model: Qwen3.5-4B
+        served_model_name: Qwen3.5-4B
+        base_url: http://127.0.0.1:8321
+        request_timeout: 300
+  params:
+    max_tokens: 400
+    temperature: 0.7

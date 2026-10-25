@@ -1,0 +1,38 @@
+simulation:
+  max_iterations: 5
+  max_planning_rounds: 1
+  max_conversation_steps: 3
+  seed: 42
+  tags:
+    - poc
+    - tiered_info
+
+environment:
+  name: TieredInfoEnvironment
+  num_hypotheses: 4
+  quorum_size: 2
+  inject_open_rumors: true
+  inject_verified_falsehoods: false
+  correct_verified_reward: 30
+  correct_open_reward: 20
+  false_open_penalty: -10
+  false_verified_penalty: -25
+
+communication_network:
+  topology: complete
+  num_agents: 4
+  consolidate_channels: true
+
+llm:
+  # Qwen3.5-4B served locally (llama.cpp OpenAI-compatible server on the pod, port 8321).
+  provider: vllm
+  vllm:
+    auto_start_server: false
+    models:
+      - model: Qwen3.5-4B
+        served_model_name: Qwen3.5-4B
+        base_url: http://127.0.0.1:8321
+        request_timeout: 300
+  params:
+    max_tokens: 400
+    temperature: 0.7
